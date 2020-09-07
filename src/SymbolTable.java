@@ -33,6 +33,7 @@ public class SymbolTable {
 	 * Does a key-value pair with the given key exist in the symbol table?
 	 */
 	public boolean contains(String key) {
+
 		return get(key) != null;
 	}
 
@@ -64,16 +65,16 @@ public class SymbolTable {
 					N++;
 					return;
 				}
+				if ((keys[currentPosition].contains(key))) {
+					vals[currentPosition] = val;
+
+					return;
+				}
 				currentPosition++;
 				currentPosition %= M;
 
-				if (i == M && keys[M] != null) {
-					currentPosition = 0;
-
-				}
 			}
 
-			keys[currentPosition] = key;
 		} else {
 			System.out.println("Hashmappen är full.");
 		}
@@ -83,37 +84,56 @@ public class SymbolTable {
 	 * Return the value associated with the given key, null if no such value
 	 */
 	public Character get(String key) {
-		Character val = null;
 		int home = hash(key);
 		int currentPosition = home;
 
 		if (size() != 0) {
 			for (int i = 0; i < M; i++) {
-				if ((keys[currentPosition].contains(key))) {
-					System.out.println("key" + (key));
-					System.out.println(keys[currentPosition] + "nuvarande sökplats. ");
+				if ((keys[currentPosition] == null)) {
+					break;
+				}
+
+				if ((keys[i] != null) && (keys[currentPosition].contains(key))) {
+
 					return vals[currentPosition];
 				}
 				currentPosition++;
 				currentPosition %= M;
 
-				if (i == M && keys[M] != null) {
-					currentPosition = 0;
-
-				}
 			}
 
 		} else {
-			System.out.println("Hashmappen är tom.");
+			System.out.println("Hashmappen är tom eller kunde inte hitta söknyckeln.");
 		}
 
 		return null;
 	} // dummy code
+		// dummy code
 
 	/**
 	 * Delete the key (and associated value) from the symbol table
 	 */
 	public void delete(String key) {
+		String tempKey = null;
+		Character tempVal = null;
+		int currentPosition = hash(key);
+
+		for (int i = 0; i < M; i++) {
+
+			if ((keys[currentPosition] != null) && (keys[currentPosition].contains(key))) {
+				tempKey = keys[currentPosition];
+				tempVal = vals[currentPosition];
+				
+				vals[currentPosition] = null;
+				keys[currentPosition] = null;
+				N--;
+			//	put(tempKey, tempVal);
+
+				currentPosition = (currentPosition + 1) % M;
+			}
+
+		}
+
 		return;
 	} // dummy code
 
