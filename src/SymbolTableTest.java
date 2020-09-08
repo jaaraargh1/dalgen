@@ -26,6 +26,18 @@ class SymbolTableTest {
 		SymbolTable st = new SymbolTable();
 
 		printMenu();
+		st.put("AAA", 'b');
+
+		st.put("ABA", 'z');
+
+		st.put("ACA", 'r');
+
+		st.put("ADD", 'e');
+
+		st.put("Aqq", 'w');
+
+		st.put("Awe", 'x');
+		
 
 		while (true) {
 			System.out.print("lab > ");

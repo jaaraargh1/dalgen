@@ -50,6 +50,32 @@ public class SymbolTable {
 		return v % M;
 	}
 
+	public void delete(String key) {
+
+		int currentPosition = hash(key);
+		String tempKey;
+		Character tempVal;
+
+		if (key == null || !contains(key))
+			return;
+
+		while (!key.equals(keys[currentPosition]))
+			currentPosition = (currentPosition + 1) % M;
+		keys[currentPosition] = null;
+		vals[currentPosition] = null;
+
+		for (currentPosition = (currentPosition + 1)
+				% M; keys[currentPosition] != null; currentPosition = (currentPosition + 1) % M) {
+			tempKey = keys[currentPosition];
+			tempVal = vals[currentPosition];
+			keys[currentPosition] = null;
+			vals[currentPosition] = null;
+			N--;
+			put(tempKey, tempVal);
+		}
+		N--;
+	}
+
 	/**
 	 * Insert the key-value pair into the symbol table
 	 */
@@ -109,33 +135,6 @@ public class SymbolTable {
 		return null;
 	} // dummy code
 		// dummy code
-
-	/**
-	 * Delete the key (and associated value) from the symbol table
-	 */
-	public void delete(String key) {
-		String tempKey = null;
-		Character tempVal = null;
-		int currentPosition = hash(key);
-
-		for (int i = 0; i < M; i++) {
-
-			if ((keys[currentPosition] != null) && (keys[currentPosition].contains(key))) {
-				tempKey = keys[currentPosition];
-				tempVal = vals[currentPosition];
-				
-				vals[currentPosition] = null;
-				keys[currentPosition] = null;
-				N--;
-			//	put(tempKey, tempVal);
-
-				currentPosition = (currentPosition + 1) % M;
-			}
-
-		}
-
-		return;
-	} // dummy code
 
 	/**
 	 * Print the contents of the symbol table
