@@ -50,30 +50,50 @@ public class SymbolTable {
 		return v % M;
 	}
 
+	/**
+	 * 
+	 * 
+	 * 
+	 * find a search key then deletes it and afterwards rehashes the keys after the
+	 * 
+	 * 
+	 */
 	public void delete(String key) {
 
-		int currentPosition = hash(key);
+		int curPos = hash(key);
 		String tempKey;
-		Character tempVal;
+		Character tempValue;
 
-		if (key == null || !contains(key))
+		if (!contains(key))
 			return;
 
-		while (!key.equals(keys[currentPosition]))
-			currentPosition = (currentPosition + 1) % M;
-		keys[currentPosition] = null;
-		vals[currentPosition] = null;
-
-		for (currentPosition = (currentPosition + 1)
-				% M; keys[currentPosition] != null; currentPosition = (currentPosition + 1) % M) {
-			tempKey = keys[currentPosition];
-			tempVal = vals[currentPosition];
-			keys[currentPosition] = null;
-			vals[currentPosition] = null;
-			N--;
-			put(tempKey, tempVal);
-		}
+		while (!key.equals(keys[curPos]))
+			curPos = (curPos + 1) % M;
+		keys[curPos] = null;
+		vals[curPos] = null;
 		N--;
+		// mod index samt Maxantalet varv, loopar så länge keys[] inte är null.
+
+		for (curPos = (curPos + 1) % M; !isNull(curPos); curPos = (curPos + 1) % M) {
+
+			tempKey = keys[curPos];
+			tempValue = vals[curPos];
+			keys[curPos] = null;
+			vals[curPos] = null;
+			N--;
+			put(tempKey, tempValue);
+		}
+
+	}
+
+	public boolean isNull(int curPos) {
+
+		if (keys[curPos] == null)
+			return true;
+
+		else
+			return false;
+
 	}
 
 	/**
@@ -98,17 +118,23 @@ public class SymbolTable {
 				}
 				currentPosition++;
 				currentPosition %= M;
-
+                   
 			}
 
 		} else {
 			System.out.println("Hashmappen är full.");
+			return;
 		}
 	}
 
 	/**
 	 * Return the value associated with the given key, null if no such value
 	 */
+	public int CounterMod(int curPos) {
+		curPos = (curPos + 1) % M;
+		return curPos;
+	}
+
 	public Character get(String key) {
 		int home = hash(key);
 		int currentPosition = home;
@@ -130,6 +156,7 @@ public class SymbolTable {
 
 		} else {
 			System.out.println("Hashmappen är tom eller kunde inte hitta söknyckeln.");
+
 		}
 
 		return null;
