@@ -99,7 +99,7 @@ public class AVLTree<T extends Comparable<T>> {
         return root.findMax().getElement();
     }
 
-    /**
+    /** 
      * Print the tree to standard output.
      */
     public void print() {
@@ -136,7 +136,7 @@ public class AVLTree<T extends Comparable<T>> {
     public void swap(AVLTree<T> x, AVLTree<T> y) {
         x.swap(y);
     }
-
+ 
     /**
      * Swap this tree with another.
      *

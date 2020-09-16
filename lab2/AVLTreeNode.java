@@ -111,22 +111,28 @@ public class AVLTreeNode<T extends Comparable<T>> {
 		} else {
 			throw new AVLTreeException("Element already exists.");
 		}
-		calculateHeight((this));
+		
+
+//The extra node is in the left child of the left child of S. singel höger
+//The extra node is in the right child of the left child of S.
+//The extra node is in the left child of the right child of S.
+//The extra node is in the right child of the right child of S. singel vänster
+		calculateHeight((this)); 
 		balance = getBalance(this);
-		System.out.println(balance);
-		System.out.println("höjden " + this.height);
-		System.out.println("rightbalansen" + getBalance(right));
-		System.out.println("vänsterbalansen " + getBalance(left));
-		if (balance == 2) {
-			if (getBalance(left) >= 0 && getBalance(right) < 0) {
-				return doubleRotationWithRightChild(this);
+	System.out.println("balansen i trädet "+balance+" vilket värde " + this.getElement());
+//		System.out.println("höjden " + this.height);
+//		System.out.println("rightbalansen" + nodeHeight(right));
+//		System.out.println("vänsterbalansen " + nodeHeight(left));
+		if (balance == 2) { 
+			if (getBalance(left) >= 0 && getBalance(right.getLeft()) > 0) {
+				return doubleRotationWithRightChild(this);  
 //1,9,4,11,,2,6,10,12,3,5,7	
 			} else {
-				return singleRotationWithRightChild(this);
-			}
+				return singleRotationWithRightChild(this); 
+			}  
 		}
 		if (balance == -2) { 
-			if (getBalance(right) <= 0 && getBalance(left) >= 0) {
+			if (getBalance(right) <= 0 && getBalance(left.getRight()) < 0) {
 				return doubleRotationWithLeftChild(this);
 
 			} else {
